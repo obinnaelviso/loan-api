@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Test mailables
+Route::get('/mail', function () {
+    return new App\Mail\OTPEmail('128288', 15);
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

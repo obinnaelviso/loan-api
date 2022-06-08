@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GenerateTokenController;
+use App\Http\Controllers\RegistrationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+Route::post('/login', GenerateTokenController::class . '@login');
+Route::post('/register', RegistrationController::class . '@register');
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/logout', GenerateTokenController::class . '@logout');
 });
