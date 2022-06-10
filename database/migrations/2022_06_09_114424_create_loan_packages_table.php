@@ -13,17 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('loan_packages', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('phone')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->timestamp('phone_verified_at')->nullable();
-            $table->string('password');
+            $table->string('name');
+            $table->unsignedBigInteger('loan_score');
+            $table->unsignedBigInteger('amount');
+            $table->unsignedSmallInteger('percentage');
+            $table->unsignedMediumInteger('duration');
             $table->foreignId('status_id')->constrained();
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('loan_packages');
     }
 };

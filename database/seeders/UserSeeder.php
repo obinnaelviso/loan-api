@@ -24,6 +24,8 @@ class UserSeeder extends Seeder
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'email' => 'johndoe@flexpadi.com',
+                'phone' => '2348026978647',
+                'phone_verified_at' => now(),
                 'email_verified_at' => now(),
                 'password' => bcrypt('1234567890'),
                 'status_id' => status_active_id(),
@@ -32,7 +34,7 @@ class UserSeeder extends Seeder
                 'first_name' => 'Jane',
                 'last_name' => 'Doe',
                 'email' => 'janedoe@bluesinventory.com',
-                'email_verified_at' => now(),
+                'phone' => '2348011122233',
                 'password' => bcrypt('1234567890'),
                 'status_id' => status_active_id()
             ]);

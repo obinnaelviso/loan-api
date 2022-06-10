@@ -2,20 +2,56 @@
 
 namespace App\Services;
 
+use App\Enums\OtpEnum;
 use App\Mail\OTPEmail;
-use App\Models\User;
-use App\Repositories\UserRepository;
+use App\Repositories\OtpRepository;
+use App\Traits\SendSMS;
 use Illuminate\Support\Facades\Mail;
 
-class OTPService {
+class OtpService {
 
-    protected $userRepo;
+    use SendSMS;
 
-    public function __construct(UserRepository $userRepo) {
-        $this->userRepo = $userRepo;
+    protected $otpRepo;
+
+    public function __construct(OtpRepository $otpRepo) {
+        $this->otpRepo = $otpRepo;
     }
 
-    public function generateOTP(int $size = 5) {
+    public function sendEmailVerificationOTP(string $email, int $expireInMins = 15) : bool {
+        // Send email here
+        $otp = $this->retrieveOTP($email, OtpEnum::EMAIL_VERIFICATION, $expireInMins);
+        try {
+            Mail::to($email)->send(new OTPEmail($otp, $expireInMins));
+            return true;
+        } catch (\Throwable $e) {
+            // report error
+            return false;
+        }
+    }
+
+    public function sendPhoneVerificationOTP(string $phone, int $expireInMins = 15) {
+        // Send SMS here
+        $otp = $this->retrieveOTP($phone, OtpEnum::PHONE_VERIFICATION, $expireInMins);
+        return $this->sendSMS($phone,
+            "Here is your OTP: {$otp}. \n
+            It will expire in {$expireInMins} minutes. \n
+            Please do not share this OTP with anyone."
+        );
+    }
+
+    protected function retrieveOTP($entity, $type, int $expireInMins) : string {
+        $otp = $this->otpRepo->get($entity, $type);
+        // Check if user already generated OTP and if it is expired
+        if($otp == null) {
+            $generatedOTP = $this->generateOTP();
+            return $this->storeOTP($generatedOTP, $entity, $type, $expireInMins)->otp;
+        } else {
+            return $otp->otp;
+        }
+    }
+
+    protected function generateOTP(int $size = 5) {
         $characters = '0123456789';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -25,32 +61,13 @@ class OTPService {
         return $randomString;
     }
 
-    public function storeOTP(int $generatedOTP, User $user, int $expireInMins) {
-        return $this->userRepo->createOTP($user, [
+    protected function storeOTP(string $generatedOTP, string $entity, string $type, int $expireInMins) {
+        return $this->otpRepo->create([
             'otp' => $generatedOTP,
+            'entity' => $entity,
+            'type' => $type,
             'expired_at' => now()->addMinutes($expireInMins),
             'status_id' => status_pending_id()
         ]);
-    }
-
-    public function sendEmailOTP(User $user, $expireInMins = 15) {
-        // Send email here
-        $otp = $this->retrieveUserOTP($user, $expireInMins);
-        try {
-            Mail::to($user->email)->send(new OTPEmail($otp, $expireInMins));
-        } catch (\Exception $e) {
-            // report error
-        }
-    }
-
-    public function retrieveUserOTP(User $user, int $expireInMins) : string {
-        $otp = $this->userRepo->getOTP($user);
-        // Check if user already generated OTP and if it is expired
-        if($otp == null || $otp->expired_at < now()) {
-            $generatedOTP = $this->generateOTP();
-            return $this->storeOTP($generatedOTP, $user, $expireInMins)->otp;
-        } else {
-            return $otp->otp;
-        }
     }
 }

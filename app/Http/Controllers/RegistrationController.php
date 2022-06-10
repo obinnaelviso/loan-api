@@ -29,6 +29,12 @@ class RegistrationController extends Controller
                 'max:255',
                 Rule::unique(User::class),
             ],
+            'phone' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique(User::class)
+            ],
             'dob' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],

@@ -16,6 +16,10 @@ class UserRepository {
         return auth()->user();
     }
 
+    public function getByEmail(string $email) {
+        return User::where('email', $email)->first();
+    }
+
     public function createUserInfo(User $user, array $data)
     {
         return $user->info()->create($data);

@@ -22,6 +22,9 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'phone',
+        'email_verified_at',
+        'phone_verified_at',
         'password',
         'status_id',
     ];
@@ -43,6 +46,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
     ];
 
     // Relationships
@@ -58,7 +62,12 @@ class User extends Authenticatable
     public function idVerification() {
         return $this->hasOne(IdVerification::class);
     }
-    public function otp() {
-        return $this->hasOne(Otp::class);
+
+    // Mutators
+    public function getEmailVerifiedAttribute() {
+        return $this->email_verified_at ? true : false;
+    }
+    public function getPhoneVerifiedAttribute() {
+        return $this->phone_verified_at ? true : false;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Services\GenerateTokenService;
 use Illuminate\Http\Request;
 
@@ -16,11 +17,18 @@ class GenerateTokenController extends Controller
 
     public function login(Request $request)
     {
-        return $this->generateTokenService->generateLoginToken($request);
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required'
+        ]);
+        $data = $this->generateTokenService->generateLoginToken($request);
+        return apiSuccess($data, 'Login Successful');
     }
 
     public function logout()
     {
-        return $this->generateTokenService->revokeLoginToken();
+        $this->generateTokenService->revokeLoginToken();
+        return apiSuccess(null, 'Logout Successful');
     }
 }

@@ -10,4 +10,9 @@ class Wallet extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    // Mutators
+    public function getBalanceStringAttribute() {
+        return config('app.currency').$this->balance;
+    }
 }

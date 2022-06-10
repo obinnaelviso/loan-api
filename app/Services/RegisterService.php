@@ -20,7 +20,9 @@ class RegisterService {
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
+            'phone_verified_at' => now(),
             'status_id' => status_pending_id(),
         ]);
 

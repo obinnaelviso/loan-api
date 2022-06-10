@@ -25,6 +25,8 @@ class AdminSeeder extends Seeder
                 'last_name' => 'Admin',
                 'email' => 'admin@flexpadi.com',
                 'email_verified_at' => now(),
+                'phone' => '2348012345678',
+                'phone_verified_at' => now(),
                 'password' => bcrypt('1234567890'),
                 'status_id' => status_active_id(),
             ]);
