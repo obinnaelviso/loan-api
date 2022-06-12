@@ -7,24 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class LoanPackage extends Model
+class Loan extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    // Relationships
-    public function loans()
-    {
-        return $this->hasMany(Loan::class);
-    }
-
-    public function status() {
-        return $this->belongsTo(Status::class);
-    }
-
-    // Mutators
-    protected function amount(): Attribute {
+    // Accessors & Mutators
+    protected function balance(): Attribute {
         return Attribute::make(
             get: fn($value) => $value / 100,
             set: fn($value) => $value * 100,
@@ -58,14 +48,14 @@ class LoanPackage extends Model
         return config('app.currency').$this->total_amount_due;
     }
 
-    // Query
-    public function scopeActive($query) {
-        return $query->where('status_id', status_active_id());
+    // Relationships
+    public function user() {
+        return $this->belongsTo(User::class);
     }
-    public function scopeInactive($query) {
-        return $query->where('status_id', status_inactive_id());
+    public function status() {
+        return $this->belongsTo(Status::class);
     }
-    public function scopeOrderByScore($query) {
-        return $query->orderBy('loan_score', 'asc');
+    public function bankAccount() {
+        return $this->belongsTo(BankAccount::class);
     }
 }

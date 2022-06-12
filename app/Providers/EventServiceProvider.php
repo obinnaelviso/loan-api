@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\LoanStatusUpdated;
 use App\Listeners\SendEmailOtp;
+use App\Listeners\SendLoanEmailNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -18,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailOtp::class,
         ],
+        LoanStatusUpdated::class => [
+            SendLoanEmailNotification::class
+        ]
     ];
 
     /**

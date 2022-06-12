@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\GenerateTokenController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoanPackageController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,4 +43,22 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/me', UserController::class . '@index');
     Route::get('/loan-packages', LoanPackageController::class . '@index');
     Route::post('/logout', GenerateTokenController::class . '@logout');
+
+    // Bank Accounts
+    Route::group(['prefix' => 'bank-accounts', 'as' => 'bank-accounts.', 'middleware' => 'user'], function() {
+        Route::get('/', BankAccountController::class . '@index');
+        Route::post('/', BankAccountController::class . '@store');
+        Route::delete('/{id}', BankAccountController::class . '@destroy');
+        Route::put('/{id}', BankAccountController::class . '@update');
+    });
+
+    // Loans
+    Route::group(['prefix' => 'loan', 'as' => 'loan.'], function() {
+        // Admin
+        Route::get('/', LoanController::class . '@index')->middleware('admin');
+        Route::put('/status/{loanId}/{status}', LoanController::class . '@statusUpdate')->middleware('admin');
+        Route::delete('/{loanId}', LoanController::class . '@destroy')->middleware('admin');
+        // User
+        Route::post('/apply', LoanController::class . '@apply')->middleware('user');
+    });
 });

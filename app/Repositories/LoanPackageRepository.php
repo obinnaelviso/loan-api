@@ -12,6 +12,10 @@ class LoanPackageRepository {
         $this->loanPackage = $loanPackage;
     }
 
+    public function getById($id) {
+        return $this->loanPackage->find($id);
+    }
+
     public function getActive() {
         return $this->loanPackage->active()->get();
     }

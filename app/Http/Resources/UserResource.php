@@ -27,6 +27,7 @@ class UserResource extends JsonResource
             'address1' => $this->info->address1,
             'address2' => $this->info->address2,
             'postal_code' => $this->info->postal_code,
+            'role' => $this->is_user ? 'User' : 'Admin',
             'wallet' => new WalletResource($this->wallet),
             'status' => new StatusResource($this->status),
         ];

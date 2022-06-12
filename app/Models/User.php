@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleEnum;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,12 +63,26 @@ class User extends Authenticatable
     public function idVerification() {
         return $this->hasOne(IdVerification::class);
     }
+    public function bankAccounts() {
+        return $this->hasMany(BankAccount::class);
+    }
+    public function loans() {
+        return $this->hasMany(Loan::class);
+    }
 
-    // Mutators
+    // Accessors
     public function getEmailVerifiedAttribute() {
         return $this->email_verified_at ? true : false;
     }
     public function getPhoneVerifiedAttribute() {
         return $this->phone_verified_at ? true : false;
     }
+    public function getIsAdminAttribute() {
+        return $this->hasRole(RoleEnum::ADMIN);
+    }
+
+    public function getIsUserAttribute() {
+        return $this->hasRole(RoleEnum::USER);
+    }
+
 }

@@ -61,13 +61,11 @@ class LoanPackageSeeder extends Seeder
                 'duration' => 30,
                 'status_id' => status_active_id()
             ];
-            LoanPackage::insert([
-                $package1,
-                $package2,
-                $package3,
-                $package4,
-                $package5
-            ]);
+            LoanPackage::create($package1);
+            LoanPackage::create($package2);
+            LoanPackage::create($package3);
+            LoanPackage::create($package4);
+            LoanPackage::create($package5);
         } else {
             echo("Loan Package already seeded!\n");
         }

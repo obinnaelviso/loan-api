@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\RoleEnum;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -51,6 +52,8 @@ class RegisterService {
         $this->userRepo->createWallet($user, [
             'status_id' => status_active_id(),
         ]);
+
+        $user->assignRole(RoleEnum::USER);
 
         event(new Registered($user));
 
