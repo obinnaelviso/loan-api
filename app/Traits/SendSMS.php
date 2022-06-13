@@ -7,30 +7,28 @@ trait SendSMS {
 
     public function sendSMS($phone, $message) {
         $phone = formatPhoneNumber($phone);
-        // try {
-            $response = Http::get(config('kudisms.url'), [
-                'username' => config('kudisms.username'),
-                'password' => config('kudisms.password'),
-                'sender' => config('app.name'),
-                'mobiles' => $phone,
-                'message' => $message,
-            ]);
-            if ($response->successful()) {
-                // return data from verification
-                $errCode = $response->object()->errno;
-                $error = $response->object()->error;
-                if ($errCode == "000") {
-                    return true;
-                } else {
-                    // return report($error);
-                    return $error;
-                }
+        $response = Http::get(config('kudisms.url'), [
+            'username' => config('kudisms.username'),
+            'password' => config('kudisms.password'),
+            'sender' => config('app.name'),
+            'mobiles' => $phone,
+            'message' => $message,
+        ]);
+        $data = array_merge([
+            'error' => null,
+            'errno' => null,
+            'status' => null,
+            'count' => null,
+            'price' => null,
+        ], $response->json());
+        if ($response->successful()) {
+            if ($data['error'] == null) {
+                return true;
             } else {
-                return false;
+                throw new \Exception((string)$data['error']);
             }
-        // } catch(\Throwable $e) {
-        //    // report error
-        //     return false;
-        // }
+        } else {
+            return false;
+        }
     }
 }

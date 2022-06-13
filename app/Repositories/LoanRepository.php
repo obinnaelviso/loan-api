@@ -63,4 +63,8 @@ class LoanRepository {
         $loan = $this->getById($loanId);
         $loan->delete();
     }
+
+    public function getClassConstant() {
+        return Loan::class;
+    }
 }

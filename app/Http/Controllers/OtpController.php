@@ -31,11 +31,11 @@ class OtpController extends Controller
             'phone' => 'required|string|size:11|regex:/^[0-9]{11}$/'
         ]);
         $isSent = $this->otpService->sendPhoneVerificationOTP(formatPhoneNumber($request->phone), config('otp.expires_in_mins'));
-        return $isSent;
-        // if($isSent) {
-        //     return apiSuccess(null, "OTP sent to phone successfully!");
-        // } else {
-        //     return apiError("Oops, something went wrong. Please try again later!");
-        // }
+        // return $isSent;
+        if($isSent) {
+            return apiSuccess(null, "OTP sent to phone successfully!");
+        } else {
+            return apiError("Oops, something went wrong. Please try again later!");
+        }
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\GenerateTokenController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoanPackageController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +35,9 @@ Route::group(['prefix' => 'verify', 'as' => 'verify.'], function() {
     Route::post('email', VerificationController::class . '@email');
 });
 
+// Handle paystack webhook
+Route::post('card/webhook', CardController::class . '@webhook');
+
 // Send OTP
 Route::group(['prefix' => 'otp', 'as' => 'otp.'], function() {
     Route::post('email', OtpController::class . '@email');
@@ -41,6 +46,7 @@ Route::group(['prefix' => 'otp', 'as' => 'otp.'], function() {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/me', UserController::class . '@index');
+    Route::post('profile/update', UserController::class . '@update');
     Route::get('/loan-packages', LoanPackageController::class . '@index');
     Route::post('/logout', GenerateTokenController::class . '@logout');
 
@@ -61,4 +67,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // User
         Route::post('/apply', LoanController::class . '@apply')->middleware('user');
     });
+
+    Route::group(['prefix' => 'card', 'as' => 'card.'], function() {
+        Route::get('/', CardController::class . '@index')->middleware('user');
+        Route::get('/all', CardController::class . '@all')->middleware('admin');
+        Route::post('/pay-loan/{loan_id}/{card_id?}', CardController::class . '@payLoan')->middleware('user');
+        Route::post('/save-card', CardController::class . '@saveCard')->middleware('user');
+    });
+
+    Route::get('/transactions', TransactionController::class . '@index')->middleware('user');
+    Route::get('/transactions/all', TransactionController::class . '@all')->middleware('admin');
 });

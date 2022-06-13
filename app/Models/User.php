@@ -84,5 +84,15 @@ class User extends Authenticatable
     public function getIsUserAttribute() {
         return $this->hasRole(RoleEnum::USER);
     }
+    public function getNameAttribute() {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+    public function transactions() {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function cards() {
+        return $this->hasMany(Card::class);
+    }
 
 }

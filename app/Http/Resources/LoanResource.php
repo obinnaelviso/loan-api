@@ -22,11 +22,13 @@ class LoanResource extends JsonResource
             'interest_string' => $this->interest_string,
             'duration' => $this->duration,
             'duration_string' => $this->duration_string,
+            'total_amount_due' => $this->total_amount_due,
+            'total_amount_due_string' => $this->total_amount_due_string,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'status' => $this->status,
             'user' => new UserResource($this->user),
-            'bank_account' => new BankAccountResource($this->bank_account),
+            'bank_account' => new BankAccountResource($this->bankAccount),
             'status' => new StatusResource($this->status),
         ];
     }

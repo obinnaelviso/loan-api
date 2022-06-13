@@ -34,9 +34,7 @@ class OtpService {
         // Send SMS here
         $otp = $this->retrieveOTP($phone, OtpEnum::PHONE_VERIFICATION, $expireInMins);
         return $this->sendSMS($phone,
-            "Here is your OTP: {$otp}. \n
-            It will expire in {$expireInMins} minutes. \n
-            Please do not share this OTP with anyone."
+            "Here is your OTP: {$otp}. \nIt will expire in {$expireInMins} minutes. \nPlease do not share this OTP with anyone."
         );
     }
 

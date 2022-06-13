@@ -13,20 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cards', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->morphs('transactable');
+            $table->string('type');
             $table->foreignId('user_id')->constrained();
-            $table->string('token')->unique();
-            $table->string('exp_month');
-            $table->string('exp_year');
-            $table->string('last4');
-            $table->string('card_type')->nullable();
-            $table->string('bank')->nullable();
-            $table->boolean('is_default')->default(false);
+            $table->string('reference')->unique();
+            $table->unsignedInteger('amount');
             $table->foreignId('status_id')->constrained();
-            $table->softDeletes();
             $table->timestamps();
-        });
+        });''
     }
 
     /**
@@ -36,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cards');
+        Schema::dropIfExists('transactions');
     }
 };
