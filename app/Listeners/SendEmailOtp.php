@@ -29,6 +29,6 @@ class SendEmailOtp
      */
     public function handle(Registered $event)
     {
-        $this->otpService->sendEmailOTP($event->user);
+        $this->otpService->sendEmailVerificationOTP($event->user->email);
     }
 }

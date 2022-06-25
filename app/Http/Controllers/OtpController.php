@@ -33,7 +33,7 @@ class OtpController extends Controller
         $isSent = $this->otpService->sendPhoneVerificationOTP(formatPhoneNumber($request->phone), config('otp.expires_in_mins'));
         // return $isSent;
         if($isSent) {
-            return apiSuccess(null, "OTP sent to phone successfully!");
+            return apiSuccess($isSent, "OTP sent to phone successfully!");
         } else {
             return apiError("Oops, something went wrong. Please try again later!");
         }

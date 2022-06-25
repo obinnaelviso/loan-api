@@ -23,7 +23,7 @@ class OtpService {
         $otp = $this->retrieveOTP($email, OtpEnum::EMAIL_VERIFICATION, $expireInMins);
         try {
             Mail::to($email)->send(new OTPEmail($otp, $expireInMins));
-            return true;
+            return $otp;
         } catch (\Throwable $e) {
             // report error
             return false;
@@ -35,7 +35,7 @@ class OtpService {
         $otp = $this->retrieveOTP($phone, OtpEnum::PHONE_VERIFICATION, $expireInMins);
         return $this->sendSMS($phone,
             "Here is your OTP: {$otp}. \nIt will expire in {$expireInMins} minutes. \nPlease do not share this OTP with anyone."
-        );
+        ) ? $otp : false;
     }
 
     protected function retrieveOTP($entity, $type, int $expireInMins) : string {
