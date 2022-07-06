@@ -18,6 +18,10 @@ class LoanService {
         return LoanResource::collection($this->loanRepo->getAllByLatest());
     }
 
+    public function getSingle($id) {
+        return new LoanResource($this->loanRepo->getById($id));
+    }
+
     public function apply($loanPackageId, $bankAccountId) {
         $loan = $this->loanRepo->create($loanPackageId, auth()->user()->id, $bankAccountId);
 
@@ -27,10 +31,23 @@ class LoanService {
     }
 
     public function changeStatus($loanId, string $status) {
+        $loan = $this->loanRepo->getById($loanId);
         if ($status == 'active') {
             $statusId = status_active_id();
+            $this->loanRepo->update($loanId, [
+                'start_at' => now()
+            ]);
+            $this->loanRepo->update($loanId, [
+                'due_at' => now()->addDays($loan->duration)
+            ]);
         } else if($status == 'pending') {
             $statusId = status_pending_id();
+            $this->loanRepo->update($loanId, [
+                'start_at' => null
+            ]);
+            $this->loanRepo->update($loanId, [
+                'due_at' => null
+            ]);
         } else if($status == 'completed') {
             $statusId = status_completed_id();
         } else if($status == 'rejected') {

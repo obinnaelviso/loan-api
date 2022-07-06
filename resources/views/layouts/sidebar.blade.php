@@ -27,21 +27,27 @@
                             </a>
                         </li><!-- .nk-menu-item -->
                         <li class="nk-menu-item">
-                            <a href="html/index-sales.html" class="nk-menu-link">
+                            <a href="{{ route('admin.transactions.index') }}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-coins"></em></span>
                                 <span class="nk-menu-text">Transactions</span>
                             </a>
                         </li><!-- .nk-menu-item -->
                         <li class="nk-menu-item">
-                            <a href="html/index-analytics.html" class="nk-menu-link">
+                            <a href="{{ route('admin.loan-packages.index') }}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-list-thumb-fill"></em></span>
+                                <span class="nk-menu-text">Loan Packages</span>
+                            </a>
+                        </li><!-- .nk-menu-item -->
+                        <li class="nk-menu-item">
+                            <a href="{{ route('admin.loans.index') }}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-growth"></em></span>
                                 <span class="nk-menu-text">Loan Applications</span>
                             </a>
                         </li><!-- .nk-menu-item -->
                         <li class="nk-menu-item">
-                            <a href="html/index-analytics.html" class="nk-menu-link">
+                            <a href="{{ route('admin.users.index') }}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
-                                <span class="nk-menu-text">User Management</span>
+                                <span class="nk-menu-text">Users Management</span>
                             </a>
                         </li><!-- .nk-menu-item -->
                         {{-- <li class="nk-menu-item has-sub">

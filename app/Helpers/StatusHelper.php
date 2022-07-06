@@ -10,8 +10,8 @@ function status_inactive_id() {
     return Status::where('title', 'inactive')->first()->id;
 }
 
-function status_blocked_id() {
-    return Status::where('title', 'blocked')->first()->id;
+function status_suspended_id() {
+    return Status::where('title', 'suspended')->first()->id;
 }
 
 function status_completed_id() {

@@ -13,6 +13,11 @@ class Loan extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'start_at' => 'datetime',
+        'due_at' => 'datetime',
+    ];
+
     // Accessors & Mutators
     protected function balance(): Attribute {
         return Attribute::make(

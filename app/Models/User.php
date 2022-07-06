@@ -49,6 +49,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
     ];
 
     // Relationships

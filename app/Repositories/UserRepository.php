@@ -11,6 +11,10 @@ class UserRepository {
         return User::role(RoleEnum::USER)->latest()->get();
     }
 
+    public function all() {
+        return User::all();
+    }
+
     public function create(array $data)
     {
         return User::create($data);
@@ -32,6 +36,34 @@ class UserRepository {
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'other_name' => $data['other_name'],
+            ]);
+            $user = $this->getById($id);
+        } else {
+            throw new \Exception('User not found');
+        }
+        return $user;
+    }
+
+    public function updateStatus(int $id, int $status_id)
+    {
+        $user = $this->getById($id);
+        if ($user) {
+            $user = $user->update([
+                'status_id' => $status_id,
+            ]);
+            $user = $this->getById($id);
+        } else {
+            throw new \Exception('User not found');
+        }
+        return $user;
+    }
+
+    public function resetPassword(int $id)
+    {
+        $user = $this->getById($id);
+        if ($user) {
+            $user = $user->update([
+                'password' => bcrypt('idaP~xelF'),
             ]);
             $user = $this->getById($id);
         } else {

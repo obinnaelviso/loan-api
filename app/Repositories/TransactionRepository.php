@@ -11,6 +11,10 @@ class TransactionRepository {
         $this->transaction = $transaction;
     }
 
+    public function getById($id) {
+        return $this->transaction->find($id);
+    }
+
     public function getByReferenceNumber(string $referenceNumber) {
         return $this->transaction->where('reference', $referenceNumber)->first();
     }

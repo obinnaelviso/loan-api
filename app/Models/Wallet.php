@@ -16,6 +16,9 @@ class Wallet extends Model
     public function getBalanceStringAttribute() {
         return config('app.currency').$this->balance;
     }
+    public function getLoanBalanceStringAttribute() {
+        return config('app.currency').$this->loan_balance;
+    }
     // Mutators
     protected function balance(): Attribute {
         return Attribute::make(

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\TransactionCollection;
+use App\Http\Resources\TransactionResource;
 use App\Repositories\TransactionRepository;
 
 class TransactionService {
@@ -15,6 +16,11 @@ class TransactionService {
     public function get($size, $page) {
         $transactions = $this->transactionRepo->getByUser(auth()->user()->id, $size, $page);
         return new TransactionCollection($transactions);
+    }
+
+    public function getSingle($id) {
+        $transaction = $this->transactionRepo->getById($id);
+        return new TransactionResource($transaction);
     }
 
     public function getAll($size, $page) {

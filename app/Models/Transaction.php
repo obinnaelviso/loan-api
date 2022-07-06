@@ -21,6 +21,9 @@ class Transaction extends Model
     public function getAmountStringAttribute() {
         return config('app.currency').$this->amount;
     }
+    public function getTypeTextAttribute() {
+        return str_replace('-', ' ', $this->type);
+    }
 
     public function user() {
         return $this->belongsTo(User::class);

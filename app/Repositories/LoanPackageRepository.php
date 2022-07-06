@@ -19,4 +19,22 @@ class LoanPackageRepository {
     public function getActive() {
         return $this->loanPackage->active()->get();
     }
+
+    public function getAll() {
+        return $this->loanPackage->all();
+    }
+
+    public function create(array $data) {
+        return $this->loanPackage->create($data);
+    }
+    public function update($id, array $data) {
+        $loanPackage = $this->getById($id);
+        $loanPackage->update($data);
+        return $loanPackage;
+    }
+    public function delete($id) {
+        $loanPackage = $this->getById($id);
+        $loanPackage->delete();
+        return $loanPackage;
+    }
 }

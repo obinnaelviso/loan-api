@@ -17,6 +17,16 @@ class UserService {
         return new UserResource($user);
     }
 
+    public function suspend($id) {
+        $user = $this->userRepo->updateStatus($id, status_suspended_id());
+        return new UserResource($user);
+    }
+
+    public function active($id) {
+        $user = $this->userRepo->updateStatus($id, status_active_id());
+        return new UserResource($user);
+    }
+
     public function update(array $data) {
         $user = $this->userRepo->update(auth()->user()->id, $data);
         return new UserResource($user);
@@ -27,8 +37,17 @@ class UserService {
         return new UserResource($user);
     }
 
+    public function resetPassword($id) {
+        $user = $this->userRepo->resetPassword($id);
+        return new UserResource($user);
+    }
+
     public function allUsers() {
         return UserResource::collection($this->userRepo->allUsers());
+    }
+
+    public function all() {
+        return UserResource::collection($this->userRepo->all());
     }
 
     public function updateUserInfo($id, array $data) {

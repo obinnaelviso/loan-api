@@ -36,6 +36,7 @@ class LoanRepository {
         $user = $this->userRepo->getById($userId);
         $loanPackage = $this->loanPackageRepo->getById($loanPackageId);
         return $user->loans()->create([
+            'title' => $loanPackage->name,
             'reference_number' => $this->generateLoanReference($this),
             'loan_score' => $loanPackage->amount,
             'percentage' => $loanPackage->percentage,
@@ -51,6 +52,18 @@ class LoanRepository {
     public function getCurrentLoan($userId) {
         $user = $this->userRepo->getById($userId);
         return $user->loans()->where('status_id', '<>', status_completed_id())->first();
+    }
+
+    public function update(int $id, array $data)
+    {
+        $loan = $this->getById($id);
+        if ($loan) {
+            $loan = $loan->update($data);
+            $loan = $this->getById($id);
+        } else {
+            throw new \Exception('Loan not found');
+        }
+        return $loan;
     }
 
     public function updateStatus($loanId, $statusId) {
