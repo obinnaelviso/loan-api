@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedInteger('amount');
             $table->foreignId('status_id')->constrained();
             $table->timestamps();
-        });''
+        });
     }
 
     /**

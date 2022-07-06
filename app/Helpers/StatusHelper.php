@@ -38,6 +38,10 @@ function status_rejected_id() {
     return Status::where('title', 'rejected')->first()->id;
 }
 
+function status_approved_id() {
+    return Status::where('title', 'approved')->first()->id;
+}
+
 function status_processing_id() {
     return Status::where('title', 'processing')->first()->id;
 }

@@ -22,6 +22,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
+            'other_name' => ['nullable', 'string', 'max:255'],
             'dob' => ['nullable', 'string', 'max:255'],
             'state' => ['nullable', 'string', 'max:255'],
             'city' => ['nullable', 'string', 'max:255'],
@@ -35,6 +36,21 @@ class UserController extends Controller
         return apiSuccess(
             $this->userService->update($validatedData),
             'User updated successfully!'
+        );
+    }
+
+    public function updateKin(Request $request) {
+        $validatedData = $request->validate([
+            'nok_name' => ['nullable', 'string', 'max:255'],
+            'nok_phone' => ['nullable', 'string', 'max:255'],
+            'nok_email' => ['nullable', 'string', 'max:255'],
+            'nok_address' => ['nullable', 'string', 'max:255'],
+            'nok_relationship' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        return apiSuccess(
+            $this->userService->updateKin($validatedData),
+            'User Next of Kin Info updated successfully!'
         );
     }
 }

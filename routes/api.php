@@ -47,6 +47,7 @@ Route::group(['prefix' => 'otp', 'as' => 'otp.'], function() {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/me', UserController::class . '@index');
     Route::post('profile/update', UserController::class . '@update');
+    Route::put('profile/update-kin', UserController::class . '@updateKin');
     Route::get('/loan-packages', LoanPackageController::class . '@index');
     Route::post('/logout', GenerateTokenController::class . '@logout');
 

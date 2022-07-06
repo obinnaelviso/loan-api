@@ -22,6 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'other_name',
         'email',
         'phone',
         'email_verified_at',
@@ -93,6 +94,10 @@ class User extends Authenticatable
 
     public function cards() {
         return $this->hasMany(Card::class);
+    }
+
+    public function getUserAvatarTextAttribute() {
+        return strtoupper(substr($this->first_name, 0, 1) . substr($this->last_name, 0, 1));
     }
 
 }

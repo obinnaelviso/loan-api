@@ -10,4 +10,8 @@ class IdVerification extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function getHiddenIdNumber() {
+        return substr($this->attributes['id_number'], 0, 4) . '****' . substr($this->attributes['id_number'], -4);
+    }
 }

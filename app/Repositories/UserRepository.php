@@ -2,9 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Enums\RoleEnum;
 use App\Models\User;
 
 class UserRepository {
+
+    public function allUsers() {
+        return User::role(RoleEnum::USER)->latest()->get();
+    }
 
     public function create(array $data)
     {
@@ -25,7 +30,39 @@ class UserRepository {
             ]);
             $user = $user->update([
                 'first_name' => $data['first_name'],
-                'last_name' => $data['last_name']
+                'last_name' => $data['last_name'],
+                'other_name' => $data['other_name'],
+            ]);
+            $user = $this->getById($id);
+        } else {
+            throw new \Exception('User not found');
+        }
+        return $user;
+    }
+
+    public function updateUserInfo(int $id, array $data)
+    {
+        $user = $this->getById($id);
+        if ($user) {
+            $user->info()->update([
+                'status_id' => $data['status_id'],
+            ]);
+            $user = $this->getById($id);
+        } else {
+            throw new \Exception('User not found');
+        }
+        return $user;
+    }
+
+    public function updateKin(int $id, array $data) {
+        $user = $this->getById($id);
+        if ($user) {
+            $user->info()->update([
+                'nok_name' => $data['nok_name'],
+                'nok_phone' => $data['nok_phone'],
+                'nok_email' => $data['nok_email'],
+                'nok_address' => $data['nok_address'],
+                'nok_relationship' => $data['nok_relationship'],
             ]);
             $user = $this->getById($id);
         } else {
