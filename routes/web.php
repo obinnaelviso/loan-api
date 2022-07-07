@@ -28,7 +28,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'admin']], function() {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'user.status', 'admin']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
     Route::group(['prefix' => 'kycs', 'as' => 'kycs.'], function() {

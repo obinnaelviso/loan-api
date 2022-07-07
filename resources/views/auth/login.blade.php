@@ -13,6 +13,8 @@
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="{{ asset('assets/css/dashlite.css') }}">
     <link id="skin-default" rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
 </head>
 
 <body class="nk-body npc-crypto bg-white pg-auth">
@@ -139,6 +141,15 @@
     <!-- JavaScript -->
     <script src="{{ asset('assets/js/bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script>
+        alertify.set('notifier','position', 'top-right');
+        @if(session('success'))
+            alertify.success("{{ session('success') }}");
+        @elseif(session('error'))
+            alertify.error("{{ session('error') }}");
+        @endif
+    </script>
 </body>
 
 </html>

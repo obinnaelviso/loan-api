@@ -75,7 +75,7 @@
                                     </a>
                                 </div>
                                 <div class="nk-tb-col tb-col-mb">
-                                    <span class="tb-amount">{{ $user->wallet->loan_balance_string }}</span>
+                                    <span class="tb-amount">{{ getLoanBalance($user->id) }}</span>
                                 </div>
                                 <div class="nk-tb-col tb-col-md">
                                     <span>{{ $user->phone }}</span>

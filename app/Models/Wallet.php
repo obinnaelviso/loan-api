@@ -12,11 +12,16 @@ class Wallet extends Model
 
     protected $guarded = [];
 
+    public function __construct() {
+
+    }
+
     // Accessors
     public function getBalanceStringAttribute() {
         return config('app.currency').$this->balance;
     }
     public function getLoanBalanceStringAttribute() {
+
         return config('app.currency').$this->loan_balance;
     }
     // Mutators

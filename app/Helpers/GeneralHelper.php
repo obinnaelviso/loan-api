@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Notifications\AdminDefaultNotify;
 use App\Notifications\DebugEmailNotify;
+use App\Repositories\LoanRepository;
 use Illuminate\Support\Facades\Notification;
 
 function reportError(String $message) {
@@ -24,4 +25,11 @@ function formatPhoneNumber($value) {
     else {
         return join($phoneNumberSplit);
     }
+}
+
+function getLoanBalance($userId) {
+    $loanRepo = app(LoanRepository::class);
+    $loan = $loanRepo->getCurrentLoan($userId);
+    $amount =  $loan ? $loan->total_amount_due_string : config('app.currency')."0";
+    return $amount;
 }

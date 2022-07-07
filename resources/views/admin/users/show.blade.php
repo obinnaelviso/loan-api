@@ -116,7 +116,7 @@
                         <li class="data-item">
                             <div class="data-col">
                                 <div class="data-label">Loan Balance</div>
-                                <div class="data-value">{{ $user->wallet->loan_balance_string }}</div>
+                                <div class="data-value">{{ getLoanBalance($user->id) }}</div>
                             </div>
                         </li>
                     </ul>

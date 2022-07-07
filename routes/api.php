@@ -44,7 +44,7 @@ Route::group(['prefix' => 'otp', 'as' => 'otp.'], function() {
     Route::post('phone', OtpController::class . '@phone');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'user.status'])->group(function () {
     Route::get('/me', UserController::class . '@index');
     Route::post('profile/update', UserController::class . '@update');
     Route::put('profile/update-kin', UserController::class . '@updateKin');

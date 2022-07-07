@@ -38,11 +38,6 @@ class UserResource extends JsonResource
             'wallet' => new WalletResource($this->wallet),
             'status' => new StatusResource($this->status),
         ];
-        if (auth()->user()->is_admin) {
-            $resource['checked_by'] = $this->info->checked_by ? new UserResource($this->info->checked_by_user) : null;
-            $resource['id_type'] = $this->idVerification ? $this->idVerification->id_type : 'N/A';
-            $resource['submitted_at'] = $this->info->created_at->format('d M Y, h:i A'); // 01 Jan 2020, 12:00 AM
-        }
         return $resource;
     }
 }
