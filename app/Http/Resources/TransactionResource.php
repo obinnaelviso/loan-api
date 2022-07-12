@@ -22,13 +22,16 @@ class TransactionResource extends JsonResource
             'reference' => $this->reference,
             'user' => new UserResource($this->user),
             'status' => new StatusResource($this->status),
+            'created_at' => $this->created_at
         ];
 
-        if ($this->type == TransactionEnum::LOAN) {
-            $data['loan'] = new LoanResource($this->transactable);
-        }
-        else if ($this->type == TransactionEnum::SAVE_CARD) {
-            $data['card'] = new CardResource($this->transactable);
+        if ($this->transactable_id > 0) {
+            if ($this->type == TransactionEnum::LOAN) {
+                $data['loan'] = new LoanResource($this->transactable);
+            }
+            else if ($this->type == TransactionEnum::SAVE_CARD) {
+                $data['card'] = new CardResource($this->transactable);
+            }
         }
 
         return $data;
