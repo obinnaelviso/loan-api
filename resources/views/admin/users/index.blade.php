@@ -120,7 +120,9 @@
                                                         <li class="divider"></li>
                                                         <li><a href="{{ route('admin.users.reset-password', $user->id) }}"><em class="icon ni ni-shield-star"></em><span>Reset Pass</span></a></li>
                                                         @if($user->status_id == status_active_id())
-                                                            <li><a href="{{ route('admin.users.suspend', $user->id) }}"><em class="icon ni ni-na"></em><span>Suspend User</span></a></li>
+                                                            @if($user->is_user)
+                                                                <li><a href="{{ route('admin.users.suspend', $user->id) }}"><em class="icon ni ni-na"></em><span>Suspend User</span></a></li>
+                                                            @endif
                                                         @else
                                                             <li><a href="{{ route('admin.users.active', $user->id) }}"><em class="icon ni ni-check-circle"></em><span>Activate User</span></a></li>
                                                         @endif

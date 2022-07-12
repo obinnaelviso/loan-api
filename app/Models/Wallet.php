@@ -27,14 +27,14 @@ class Wallet extends Model
     // Mutators
     protected function balance(): Attribute {
         return Attribute::make(
-            get: fn($value) => $value / 100,
-            set: fn($value) => $value * 100,
+            get: fn($value) => ($value == 0) ? 0 : $value * 0.01,
+            set: fn($value) => ($value == 0) ? 0 :$value * 100,
         );
     }
     protected function loanBalance(): Attribute {
         return Attribute::make(
-            get: fn($value) => $value / 100,
-            set: fn($value) => $value * 100,
+            get: fn($value) =>($value == 0) ? 0 : $value * 0.01,
+            set: fn($value) =>($value == 0) ? 0 : $value * 100,
         );
     }
 }

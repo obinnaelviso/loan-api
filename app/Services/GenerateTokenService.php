@@ -17,7 +17,7 @@ class GenerateTokenService {
     }
     public function generateLoginToken(Request $request) : array {
         $user = $this->userRepo->getByEmail($request->email);
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || $user->is_admin || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);

@@ -33,3 +33,10 @@ function getLoanBalance($userId) {
     $amount =  $loan ? $loan->total_amount_due_string : config('app.currency')."0";
     return $amount;
 }
+
+function abort_api_routes() {
+    $host = parse_url(request()->root())['host'];
+    if ($host == config('domain.api')) {
+        abort(404);
+    }
+}
