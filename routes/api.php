@@ -63,6 +63,7 @@ Route::middleware(['auth:sanctum', 'user.status'])->group(function () {
     Route::group(['prefix' => 'loan', 'as' => 'loan.'], function() {
         // Admin
         Route::get('/', LoanController::class . '@index')->middleware('admin');
+        Route::get('/current', LoanController::class . '@currentLoan');
         Route::put('/status/{loanId}/{status}', LoanController::class . '@statusUpdate')->middleware('admin');
         Route::delete('/{loanId}', LoanController::class . '@destroy')->middleware('admin');
         // User

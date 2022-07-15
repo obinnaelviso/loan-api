@@ -30,6 +30,11 @@ class LoanService {
         return new LoanResource($loan);
     }
 
+    public function getCurrentLoan() {
+        $loan = $this->loanRepo->getCurrentLoan(auth()->user()->id);
+        return $loan ? new LoanResource($loan) : null;
+    }
+
     public function changeStatus($loanId, string $status) {
         $loan = $this->loanRepo->getById($loanId);
         if ($status == 'active') {

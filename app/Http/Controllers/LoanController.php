@@ -17,6 +17,10 @@ class LoanController extends Controller
         return apiSuccess($this->loanService->getAll(), "Loan applications retrieved successfully!");
     }
 
+    public function currentLoan() {
+        return apiSuccess($this->loanService->getCurrentLoan(), "Loan application retrieved successfully!");
+    }
+
     public function apply(Request $request) {
         $request->validate([
             'loan_package_id' => 'required|integer|exists:loan_packages,id',
