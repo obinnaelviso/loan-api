@@ -29,7 +29,7 @@ Route::post('/login', GenerateTokenController::class . '@login');
 Route::post('/register', RegistrationController::class . '@register');
 
 // Verifications
-Route::group(['prefix' => 'verify', 'as' => 'verify.'], function() {
+Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {
     Route::post('nin', VerificationController::class . '@nin');
     Route::post('phone', VerificationController::class . '@phone');
     Route::post('email', VerificationController::class . '@email');
@@ -39,7 +39,7 @@ Route::group(['prefix' => 'verify', 'as' => 'verify.'], function() {
 Route::post('card/webhook', CardController::class . '@webhook');
 
 // Send OTP
-Route::group(['prefix' => 'otp', 'as' => 'otp.'], function() {
+Route::group(['prefix' => 'otp', 'as' => 'otp.'], function () {
     Route::post('email', OtpController::class . '@email');
     Route::post('phone', OtpController::class . '@phone');
 });
@@ -52,7 +52,7 @@ Route::middleware(['auth:sanctum', 'user.status'])->group(function () {
     Route::post('/logout', GenerateTokenController::class . '@logout');
 
     // Bank Accounts
-    Route::group(['prefix' => 'bank-accounts', 'as' => 'bank-accounts.', 'middleware' => 'user'], function() {
+    Route::group(['prefix' => 'bank-accounts', 'as' => 'bank-accounts.', 'middleware' => 'user'], function () {
         Route::get('/', BankAccountController::class . '@index');
         Route::post('/', BankAccountController::class . '@store');
         Route::delete('/{id}', BankAccountController::class . '@destroy');
@@ -60,7 +60,7 @@ Route::middleware(['auth:sanctum', 'user.status'])->group(function () {
     });
 
     // Loans
-    Route::group(['prefix' => 'loan', 'as' => 'loan.'], function() {
+    Route::group(['prefix' => 'loan', 'as' => 'loan.'], function () {
         // Admin
         Route::get('/', LoanController::class . '@index')->middleware('admin');
         Route::get('/current', LoanController::class . '@currentLoan');
@@ -70,7 +70,7 @@ Route::middleware(['auth:sanctum', 'user.status'])->group(function () {
         Route::post('/apply', LoanController::class . '@apply')->middleware('user');
     });
 
-    Route::group(['prefix' => 'card', 'as' => 'card.'], function() {
+    Route::group(['prefix' => 'card', 'as' => 'card.'], function () {
         Route::get('/', CardController::class . '@index')->middleware('user');
         Route::get('/all', CardController::class . '@all')->middleware('admin');
         Route::post('/pay-loan/{loan_id}/{card_id?}', CardController::class . '@payLoan')->middleware('user');

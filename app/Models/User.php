@@ -53,52 +53,65 @@ class User extends Authenticatable
     ];
 
     // Relationships
-    public function info() {
+    public function info()
+    {
         return $this->hasOne(UserInfo::class);
     }
-    public function wallet() {
+    public function wallet()
+    {
         return $this->hasOne(Wallet::class);
     }
-    public function status() {
+    public function status()
+    {
         return $this->belongsTo(Status::class);
     }
-    public function idVerification() {
+    public function idVerification()
+    {
         return $this->hasOne(IdVerification::class);
     }
-    public function bankAccounts() {
-        return $this->hasMany(BankAccount::class);
+    public function bankAccount()
+    {
+        return $this->hasOne(BankAccount::class);
     }
-    public function loans() {
+    public function loans()
+    {
         return $this->hasMany(Loan::class);
     }
 
     // Accessors
-    public function getEmailVerifiedAttribute() {
+    public function getEmailVerifiedAttribute()
+    {
         return $this->email_verified_at ? true : false;
     }
-    public function getPhoneVerifiedAttribute() {
+    public function getPhoneVerifiedAttribute()
+    {
         return $this->phone_verified_at ? true : false;
     }
-    public function getIsAdminAttribute() {
+    public function getIsAdminAttribute()
+    {
         return $this->hasRole(RoleEnum::ADMIN);
     }
 
-    public function getIsUserAttribute() {
+    public function getIsUserAttribute()
+    {
         return $this->hasRole(RoleEnum::USER);
     }
-    public function getNameAttribute() {
+    public function getNameAttribute()
+    {
         return $this->first_name . ' ' . $this->last_name;
     }
-    public function transactions() {
+    public function transactions()
+    {
         return $this->hasMany(Transaction::class);
     }
 
-    public function cards() {
+    public function cards()
+    {
         return $this->hasMany(Card::class);
     }
 
-    public function getUserAvatarTextAttribute() {
+    public function getUserAvatarTextAttribute()
+    {
         return strtoupper(substr($this->first_name, 0, 1) . substr($this->last_name, 0, 1));
     }
-
 }

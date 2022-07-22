@@ -22,8 +22,8 @@ class LoanService {
         return new LoanResource($this->loanRepo->getById($id));
     }
 
-    public function apply($loanPackageId, $bankAccountId) {
-        $loan = $this->loanRepo->create($loanPackageId, auth()->user()->id, $bankAccountId);
+    public function apply($loanPackageId) {
+        $loan = $this->loanRepo->create($loanPackageId, auth()->user()->id);
 
         event(new LoanStatusUpdated($loan->id, status_pending_id()));
 
