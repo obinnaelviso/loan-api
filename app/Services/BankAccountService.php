@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Resources\BankAccountResource;
 use App\Repositories\BankAccountRepository;
+use Illuminate\Support\Facades\Http;
 
 class BankAccountService
 {
@@ -17,6 +18,13 @@ class BankAccountService
     public function getAll()
     {
         return BankAccountResource::collection([$this->bankAccountRepo->getByUser(auth()->user()->id)]);
+    }
+
+    public function getBanks()
+    {
+        $response = $this->initializeApi()->get(config('paystack.url') . '/bank?currency=NGN');
+        $data = $response->object();
+        return $data ? $data->data : null;
     }
 
     public function create(array $data)
@@ -33,5 +41,10 @@ class BankAccountService
     public function delete($id)
     {
         return $this->bankAccountRepo->delete($id);
+    }
+
+    protected function initializeApi()
+    {
+        return Http::withToken(config('paystack.sk'));
     }
 }

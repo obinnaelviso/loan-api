@@ -51,6 +51,9 @@ Route::middleware(['auth:sanctum', 'user.status'])->group(function () {
     Route::get('/loan-packages', LoanPackageController::class . '@index');
     Route::post('/logout', GenerateTokenController::class . '@logout');
 
+    // Banks
+    Route::get('/banks', BankAccountController::class . '@banks');
+
     // Bank Accounts
     Route::group(['prefix' => 'bank-accounts', 'as' => 'bank-accounts.', 'middleware' => 'user'], function () {
         Route::get('/', BankAccountController::class . '@index');

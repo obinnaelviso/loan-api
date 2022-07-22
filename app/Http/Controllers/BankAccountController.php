@@ -13,8 +13,14 @@ class BankAccountController extends Controller
         $this->bankAccountService = $bankAccountService;
     }
 
-    public function index() {
+    public function index()
+    {
         return apiSuccess($this->bankAccountService->getAll(), "Bank account retrieved successfully!");
+    }
+
+    public function banks()
+    {
+        return apiSuccess($this->bankAccountService->getBanks(), "Banks retrieved successfully!");
     }
 
     public function store(Request $request) {
